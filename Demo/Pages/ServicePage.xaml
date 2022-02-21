@@ -1,0 +1,105 @@
+﻿<Page x:Class="Demo.Pages.ServicePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Demo.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ServicePage">
+
+    <Page.Resources>
+        <DataTemplate x:Key="ServiceItems">
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel Orientation="Horizontal" Background="{Binding green}">
+
+                    <GroupBox >
+                        <StackPanel Orientation="Horizontal" Width="600px" >
+                            <Image x:Name="ImageService" Source="{Binding img}" Height="75px" Width="75px"/>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock x:Name="NameService" Text="{Binding name_service}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Name="OldCost" Text="{Binding cost, StringFormat = {}{0:N2}}" TextDecorations="{Binding decor}">
+                                    <Run Text=" "/>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding newcost, StringFormat = {}{0:N2}}" Visibility="{Binding visible}">
+                                    <Run Text=" "/>
+                                    </TextBlock>
+                                    <TextBlock x:Name="CostService" >
+                                
+                                <Run Text="рублей за"/>
+                                <Run Text="{Binding duration}"/>
+                                <Run Text=" минут"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+
+                                <TextBlock  Text="*скидка " Visibility="{Binding visibleD}" Style="{StaticResource Tb_discount}">
+                                    <Run Text="{Binding discount, StringFormat = {}{0:P0}}"/>
+                                </TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="EditService" Content="Редактировать"  Uid="{Binding id_service}" Click="EditService_Click" Visibility="{Binding visiblebtn}" Margin="0 0 10 0"/>
+                                    <Button x:Name="DeleteService" Content="Удалить" Uid="{Binding id_service}" Click="DeleteService_Click" Visibility="{Binding visiblebtn}" Margin="0 0 10 0" />
+                                    <Button x:Name="NewZapis" Content="Записать" Uid="{Binding id_service}" Click="NewZapis_Click" Visibility="{Binding visiblebtn}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                </StackPanel>
+            </Border >
+        </DataTemplate>
+       
+    </Page.Resources>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition x:Name="ColumnDefMain"  Width="0"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+            <GroupBox Header="Сортировать по">
+                <StackPanel Orientation="Horizontal" >
+                    <Button x:Name="CostSortBtn" Content="Цене" Click="Button_Click" Width="100" Height="25" Margin="0 12 0 0" />
+                    <GroupBox Header="Скидке">
+                        <ComboBox x:Name="DiscountCB" SelectionChanged="DiscountCB_SelectionChanged">
+                            <ComboBoxItem Content="Все"/>
+                            <ComboBoxItem Content="0% - 5%"/>
+                            <ComboBoxItem Content="5% - 15%"/>
+                            <ComboBoxItem Content="15% - 30%"/>
+                            <ComboBoxItem Content="30% - 70%"/>
+                            <ComboBoxItem Content="70% - 100%"/>
+                        </ComboBox>
+                    </GroupBox>
+
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Поиск по имени" Width="120">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="SearchBarTxt" Width="100" Height="25" Margin="0 12 0 0" TextChanged="SearchBarTxt_TextChanged" FontSize="14"/>
+                </StackPanel>
+            </GroupBox>
+            <StackPanel>
+                <TextBlock x:Name="autorizTxt" Text=""  Margin="10 5 10 0" />
+                <Button x:Name="autorizBtn" Content="Авторизоваться" Height="30"  Margin="10 5 10 0" Click="autorizBtn_Click"/>
+            </StackPanel>
+            <GroupBox x:Name="AddUsBtn" Header="Добавить услугу" Visibility="Collapsed">
+                <Button x:Name="AddService" Content="Добавить" Uid="{Binding id_service}" Click="AddService_Click" Visibility="{Binding visiblebtn}" Margin="0 0 10 0" Height="30" />
+            </GroupBox>
+            <GroupBox x:Name="ZapBtn" Header="Ближайшие записи" Visibility="Collapsed">
+                <Button x:Name="NextZap" Content="Записи" Click="NextZap_Click"  Margin="0 0 10 0" Height="30" />
+            </GroupBox>
+        </StackPanel>
+        <ListBox x:Name="ServiceList" ItemTemplate="{StaticResource ServiceItems}" Grid.Column="0" Grid.Row="1"/>
+        <TextBlock x:Name="kol_voZap" Grid.Column="0" Grid.Row="3" />
+
+
+    </Grid>
+</Page>
