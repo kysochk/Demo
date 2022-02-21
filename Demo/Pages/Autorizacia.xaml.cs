@@ -34,7 +34,7 @@ namespace Demo
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (loginTxt.Text == "0000")
+            if (loginTxt.Text == "1")
             {
                 MessageBox.Show("Вы вошли в режим администратора.", "Успешная авторизация", MessageBoxButton.OK, MessageBoxImage.Information);
                 LoadPages.MainFrame.Navigate(new ServicePage(1));
